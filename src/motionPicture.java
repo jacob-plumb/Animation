@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class motionPicture {
 	
@@ -9,6 +10,10 @@ public class motionPicture {
 	private int length = 800;
     private int width = 600;
     private int[] circSizes = {50, 50, 100, 200, 350, 550, 800, 1100};
+    ArrayList<Circle> circList = new ArrayList<Circle>();
+    
+    //issue for some reason
+    //circList.add(new Circle(50, new int[]{0, 0, 0}));
     
     Color[] colors= {
     		new Color(66, 66, 66), //dark grey
@@ -24,6 +29,7 @@ public class motionPicture {
 	public static void main(String[] args) {
         new motionPicture().go();
     }
+	
 
     private void go() {
         frame = new JFrame("Test");
