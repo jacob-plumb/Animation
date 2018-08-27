@@ -9,22 +9,20 @@ public class motionPicture {
 	
 	private int length = 800;
     private int width = 600;
-    private int[] circSizes = {50, 50, 100, 200, 350, 550, 800, 1100};
+    //private int[] circSizes = {50, 50, 100, 200, 350, 550, 800, 1100};
     ArrayList<Circle> circList = new ArrayList<Circle>();
     
-    //issue for some reason
-    //circList.add(new Circle(50, new int[]{0, 0, 0}));
+    public motionPicture() {
+    	circList.add(new Circle(1100));
+    	circList.add(new Circle(800));
+    	circList.add(new Circle(550));
+    	circList.add(new Circle(350));
+    	circList.add(new Circle(200));
+    	circList.add(new Circle(100));
+    	circList.add(new Circle(50));
+    	circList.add(new Circle(50, new int[] {0,0,0}));
+    }
     
-    Color[] colors= {
-    		new Color(66, 66, 66), //dark grey
-    		new Color(114, 114, 114), //med grey
-    		new Color(196, 196, 196), // light grey
-    		new Color(71, 38, 12), //dark brown
-    		new Color(122, 66, 22), //med brown
-    		new Color(206, 126, 64), //light brown
-    		new Color(255, 192, 155) //super light brown
-    		
-    };
 	
 	public static void main(String[] args) {
         new motionPicture().go();
@@ -57,37 +55,12 @@ public class motionPicture {
             g.setColor(Color.lightGray);
             g.fillRect(0, 0, this.getWidth(), this.getHeight());
             
-            //Hole 7
-            g.setColor(colors[6]);
-            g.fillOval((length/2) - (circSizes[7]/2), (width/2) - (circSizes[7]/2), circSizes[7], circSizes[7]);
+            for(Circle circ : circList)
+            {
+            	g.setColor(new Color(circ.getRed(), circ.getGreen(), circ.getBlue()));
+            	g.fillOval((length/2) - (circ.getSize()/2), (width/2) - (circ.getSize()/2), circ.getSize(), circ.getSize());
+            }
             
-            //Hole 6
-            g.setColor(colors[5]);
-            g.fillOval((length/2) - (circSizes[6]/2), (width/2) - (circSizes[6]/2), circSizes[6], circSizes[6]);
-            
-            //Hole 5
-            g.setColor(colors[4]);
-            g.fillOval((length/2) - (circSizes[5]/2), (width/2) - (circSizes[5]/2), circSizes[5], circSizes[5]);
-            
-            //Hole 4
-            g.setColor(colors[3]);
-            g.fillOval((length/2) - (circSizes[4]/2), (width/2) - (circSizes[4]/2), circSizes[4], circSizes[4]);
-            
-            //Hole 3
-            g.setColor(colors[2]);
-            g.fillOval((length/2) - (circSizes[3]/2), (width/2) - (circSizes[3]/2), circSizes[3], circSizes[3]);
-            
-            //Hole 2
-            g.setColor(colors[1]);
-            g.fillOval((length/2) - (circSizes[2]/2), (width/2) - (circSizes[2]/2), circSizes[2], circSizes[2]);
-            
-            //Hole 1
-            g.setColor(colors[0]);
-            g.fillOval((length/2) - (circSizes[1]/2), (width/2) - (circSizes[1]/2), circSizes[1], circSizes[1]);
-            
-            //Hole 0
-            g.setColor(Color.black);
-            g.fillOval((length/2) - (circSizes[0]/2), (width/2) - (circSizes[0]/2), circSizes[0], circSizes[0]);
         }
     }
     
@@ -103,11 +76,23 @@ public class motionPicture {
     
     private void growCircles()
     {
-    	for(int i = 1; i < circSizes.length; i++)
+    	//making circles bigger
+    	for(int i = 0; i < circList.size() - 1; i++)
     	{
-    		if(circSizes[i] < 1300) {
-    			circSizes[i] += 1;
-    		}
+    		//put increment number inside of incrSize() function depending on how big the circle is
+    		circList.get(i).incrSize(1);
+    	}
+    	
+    	//removing circles that are too big
+    	if(circList.get(0).getSize() > 1300)
+    	{
+    		circList.remove(0);
+    	}
+    	
+    	//creating new circle
+    	if(circList.get(circList.size()-2).getSize() == 100)
+    	{
+    		circList.add(circList.size()-1, new Circle(50));
     	}
     }
 
