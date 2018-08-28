@@ -63,7 +63,10 @@ public class motionPicture {
             }
             
             g.setColor(Color.black);
-            g.fillRect((length/2) - 5, (width/2) - 5, 10, width);
+            g.fillRect((length/2) - 4, (width/2) - 5, 10, width);
+            g.fillPolygon(new int[] {401, 350, 450}, new int[] {288, 600, 600}, 3);
+            
+            g.fillOval(0, 500, 800, 200);
             
         }
     }
