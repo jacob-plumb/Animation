@@ -9,8 +9,8 @@ public class motionPicture {
 	
 	private int length = 800;
     private int width = 600;
-    private int[] circSizes = {50, 50, 100, 200, 350, 550, 800, 1100};
     ArrayList<Circle> circList = new ArrayList<Circle>();
+    private int centerCirc = 0;
     
     public motionPicture() {
     	circList.add(new Circle(1100));
@@ -20,7 +20,8 @@ public class motionPicture {
     	circList.add(new Circle(200));
     	circList.add(new Circle(100));
     	circList.add(new Circle(50));
-    	circList.add(new Circle(50, new int[] {0,0,0}));
+    	circList.add(new Circle(25));
+    	circList.add(new Circle(25, new int[] {0,0,0}));
     }
     
 	
@@ -61,6 +62,9 @@ public class motionPicture {
             	g.fillOval((length/2) - (circ.getSize()/2), (width/2) - (circ.getSize()/2), circ.getSize(), circ.getSize());
             }
             
+            g.setColor(Color.black);
+            g.fillRect((length/2) - 5, (width/2) - 5, 10, width);
+            
         }
     }
     
@@ -68,7 +72,7 @@ public class motionPicture {
         while(true){
             growCircles();
             try{
-                Thread.sleep(4);
+                Thread.sleep(5);
             } catch (Exception exc){}
             frame.repaint();
         }
@@ -76,6 +80,15 @@ public class motionPicture {
     
     private void growCircles()
     {
+    	
+    	/* THIS INCREASES THE SIZE OF THE CENTER HOLE
+    	 * if(centerCirc%15 == 0)
+    		{
+    			circList.get(circList.size()-1).incrSize();
+    		}
+    		enterCirc++;
+    	 */
+    	
     	//making circles bigger
     	for(int i = 0; i < circList.size() - 1; i++)
     	{
@@ -89,9 +102,9 @@ public class motionPicture {
     	}
     	
     	//creating new circle
-    	if(circList.get(circList.size()-2).getSize() == 100)
+    	if(circList.get(circList.size()-2).getSize() == 50)
     	{
-    		circList.add(circList.size()-1, new Circle(50));
+    		circList.add(circList.size()-1, new Circle(25));
     	}
     }
 

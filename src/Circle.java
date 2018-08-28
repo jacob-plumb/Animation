@@ -33,29 +33,33 @@ public class Circle {
 	
 	public void incrSize()
 	{
-		if(size <= 100)
+		if(size <= 50)
 		{
 			size++;
 		}
-		else if(size <= 200)
+		else if(size <= 100)
 		{
 			size += 2;
 		}
-		else if(size <= 350)
+		else if(size <= 200)
 		{
 			size += 3;
 		}
-		else if(size <= 550)
+		else if(size <= 350)
 		{
 			size += 4;
 		}
-		else if(size <= 800)
+		else if(size <= 550)
 		{
 			size += 5;
 		}
-		else if(size <= 1300)
+		else if(size <= 800)
 		{
 			size += 6;
+		}
+		else if(size <= 1300)
+		{
+			size += 7;
 		}
 	}
 	
