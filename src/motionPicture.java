@@ -9,7 +9,7 @@ public class motionPicture {
 	
 	private int length = 800;
     private int width = 600;
-    //private int[] circSizes = {50, 50, 100, 200, 350, 550, 800, 1100};
+    private int[] circSizes = {50, 50, 100, 200, 350, 550, 800, 1100};
     ArrayList<Circle> circList = new ArrayList<Circle>();
     
     public motionPicture() {
@@ -68,7 +68,7 @@ public class motionPicture {
         while(true){
             growCircles();
             try{
-                Thread.sleep(10);
+                Thread.sleep(4);
             } catch (Exception exc){}
             frame.repaint();
         }
@@ -79,8 +79,7 @@ public class motionPicture {
     	//making circles bigger
     	for(int i = 0; i < circList.size() - 1; i++)
     	{
-    		//put increment number inside of incrSize() function depending on how big the circle is
-    		circList.get(i).incrSize(1);
+    		circList.get(i).incrSize();
     	}
     	
     	//removing circles that are too big

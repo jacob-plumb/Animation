@@ -31,9 +31,32 @@ public class Circle {
 		this.size = size;
 	}
 	
-	public void incrSize(int incr)
+	public void incrSize()
 	{
-		size += incr;
+		if(size <= 100)
+		{
+			size++;
+		}
+		else if(size <= 200)
+		{
+			size += 2;
+		}
+		else if(size <= 350)
+		{
+			size += 3;
+		}
+		else if(size <= 550)
+		{
+			size += 4;
+		}
+		else if(size <= 800)
+		{
+			size += 5;
+		}
+		else if(size <= 1300)
+		{
+			size += 6;
+		}
 	}
 	
 	public int getRed()
