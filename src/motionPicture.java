@@ -10,7 +10,7 @@ public class motionPicture {
 	private int length = 800;
     private int width = 600;
     ArrayList<Circle> circList = new ArrayList<Circle>();
-    private int centerCirc = 0;
+    ArrayList<Polygon> polyList = new ArrayList<Polygon>();
     
     public motionPicture() {
     	circList.add(new Circle(1100));
@@ -22,6 +22,7 @@ public class motionPicture {
     	circList.add(new Circle(50));
     	circList.add(new Circle(25));
     	circList.add(new Circle(25, new int[] {0,0,0}));
+    	polyList.add(new Polygon(new int[]{length/2, 350, 450}, new int[]{width/2, width+30, width+30}));
     }
     
 	
@@ -63,10 +64,12 @@ public class motionPicture {
             }
             
             g.setColor(Color.black);
-            g.fillRect((length/2) - 4, (width/2) - 5, 10, width);
-            g.fillPolygon(new int[] {401, 350, 450}, new int[] {288, 600, 600}, 3);
+            //g.fillRect((length/2) - 4, (width/2) - 5, 10, width);
             
-            g.fillOval(0, 500, 800, 200);
+            //SET WITH POLYLIST, FOR LOOP, FIX
+            g.fillPolygon(new int[] {polyX[0], polyX[1], polyX[2]}, new int[] {polyY[0], polyY[1], polyY[2]}, 3);
+            
+            //g.fillOval(0, 500, 800, 200);
             
         }
     }
@@ -74,6 +77,7 @@ public class motionPicture {
     private void animate() {
         while(true){
             growCircles();
+            movePolygon();
             try{
                 Thread.sleep(5);
             } catch (Exception exc){}
@@ -81,16 +85,34 @@ public class motionPicture {
         }
     }
     
+    private void movePolygon()
+    {
+    	for(Polygon poly : polyList)
+    	{
+	    	for(int i = 1; i < 3; i++)
+	    	{
+	    		if(poly.getY(i) == width + 30 && poly.getX(i) > - 30)
+	    		{
+	    			poly.setX(i, -5);
+	    		}
+	    		else if (poly.getX(i) == -30 && poly.getY(i) > -30)
+	    		{
+	    			poly.setY(i, -5);
+	    		}
+	    		else if(poly.getY(i) == -30 && poly.getX(i) < length + 30)
+	    		{
+	    			poly.setX(i, 5);
+	    		}
+	    		else if(poly.getX(i) == length +30 && poly.getY(i) < width +30)
+	    		{
+	    			poly.setY(i, 5);
+	    		}
+	    	}
+    	}
+    }
+    
     private void growCircles()
     {
-    	
-    	/* THIS INCREASES THE SIZE OF THE CENTER HOLE
-    	 * if(centerCirc%15 == 0)
-    		{
-    			circList.get(circList.size()-1).incrSize();
-    		}
-    		enterCirc++;
-    	 */
     	
     	//making circles bigger
     	for(int i = 0; i < circList.size() - 1; i++)
