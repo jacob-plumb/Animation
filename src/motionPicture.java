@@ -23,6 +23,7 @@ public class motionPicture {
     	circList.add(new Circle(25));
     	circList.add(new Circle(25, new int[] {0,0,0}));
     	polyList.add(new Polygon(new int[]{length/2, 350, 450}, new int[]{width/2, width+30, width+30}));
+    	polyList.add(new Polygon(new int[]{length/2, 350, 450}, new int[]{width/2, -30, -30}));
     }
     
 	
@@ -67,7 +68,10 @@ public class motionPicture {
             //g.fillRect((length/2) - 4, (width/2) - 5, 10, width);
             
             //SET WITH POLYLIST, FOR LOOP, FIX
-            g.fillPolygon(new int[] {polyX[0], polyX[1], polyX[2]}, new int[] {polyY[0], polyY[1], polyY[2]}, 3);
+            for(Polygon poly : polyList)
+            {
+            	g.fillPolygon(new int[] {poly.getX(0), poly.getX(1), poly.getX(2)}, new int[] {poly.getY(0), poly.getY(1), poly.getY(2)}, 3);
+            }
             
             //g.fillOval(0, 500, 800, 200);
             
