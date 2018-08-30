@@ -91,25 +91,26 @@ public class motionPicture {
     
     private void movePolygon()
     {
+    	int moveNum = 5;
     	for(Polygon poly : polyList)
     	{
 	    	for(int i = 1; i < 3; i++)
 	    	{
 	    		if(poly.getY(i) == width + 30 && poly.getX(i) > - 30)
 	    		{
-	    			poly.setX(i, -5);
+	    			poly.setX(i, -moveNum);
 	    		}
 	    		else if (poly.getX(i) == -30 && poly.getY(i) > -30)
 	    		{
-	    			poly.setY(i, -5);
+	    			poly.setY(i, -moveNum);
 	    		}
 	    		else if(poly.getY(i) == -30 && poly.getX(i) < length + 30)
 	    		{
-	    			poly.setX(i, 5);
+	    			poly.setX(i, moveNum);
 	    		}
 	    		else if(poly.getX(i) == length +30 && poly.getY(i) < width +30)
 	    		{
-	    			poly.setY(i, 5);
+	    			poly.setY(i, moveNum);
 	    		}
 	    	}
     	}
