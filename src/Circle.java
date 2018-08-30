@@ -12,7 +12,7 @@ public class Circle {
 	public Circle(int size)
 	{
 		this.size = size;
-		genRandColor();
+		genRandBlue();
 	}
 	
 	public Circle(int size, int[] rgb)
@@ -82,9 +82,15 @@ public class Circle {
 	{
 		for(int i = 0; i < rgb.length; i++)
 		{
-			int x = (int)(Math.random()*256);
-			rgb[i] = x;
+			rgb[i] = (int)(Math.random()*256);
 		}
+	}
+	
+	public void genRandBlue()
+	{
+		rgb[0] = 0;
+		rgb[1] = 0;
+		rgb[2] = (int)(Math.random()*156 + 100);
 	}
 	
 }
