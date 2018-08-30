@@ -17,6 +17,8 @@ public class motionPicture {
     private int circModY = 0;
     
     private int moveCounter = 0;
+    private int multY = 1;
+    private int multX = 1;
     
     public motionPicture() {
     	circList.add(new Circle(1100));
@@ -74,7 +76,7 @@ public class motionPicture {
             g.setColor(new Color(0, 0, (int)(Math.random()*156)));
             for(Polygon poly : polyList)
             {
-            	g.fillPolygon(new int[] {poly.getX(0), poly.getX(1), poly.getX(2)}, new int[] {poly.getY(0), poly.getY(1), poly.getY(2)}, 3);
+            	g.fillPolygon(new int[] {poly.getX(0) - circModX, poly.getX(1), poly.getX(2)}, new int[] {poly.getY(0) - circModY, poly.getY(1), poly.getY(2)}, 3);
             }
             
         }
@@ -145,10 +147,31 @@ public class motionPicture {
     private void moveCircles()
     {
     	moveCounter++;
-    	if(moveCounter%50 == 0)
+    	if(moveCounter%20 == 0)
     	{
-    		//do something
+    		int yBound = (int)(Math.random()*5 + 5);
+    		int xBound = (int)(Math.random()*5 + 5);
+    		if(circModY >= yBound)
+    		{
+    			multY = -1;
+    		}
+    		else if (circModY <= -yBound)
+    		{
+    			multY = 1;
+    		}
+    		if(circModX >= xBound)
+    		{
+    			multX = -1;
+    		}
+    		else if(circModX <= -xBound)
+    		{
+    			multX = 1;
+    		}
+    		
+    		circModY += multY;
+    		circModX += multX;
     	}
+    	
     }
 
     
