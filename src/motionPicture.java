@@ -147,10 +147,10 @@ public class motionPicture {
     private void moveCircles()
     {
     	moveCounter++;
-    	if(moveCounter%20 == 0)
+    	if(moveCounter%40 == 0)
     	{
-    		int yBound = (int)(Math.random()*5 + 5);
-    		int xBound = (int)(Math.random()*5 + 5);
+    		int yBound = (int)(Math.random()*10);
+    		int xBound = (int)(Math.random()*10);
     		if(circModY >= yBound)
     		{
     			multY = -1;
