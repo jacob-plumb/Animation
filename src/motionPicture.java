@@ -20,6 +20,8 @@ public class motionPicture {
     private int multY = 1;
     private int multX = 1;
     
+    public JSlider slider = new JSlider();
+    
     public motionPicture() {
     	circList.add(new Circle(1100));
     	circList.add(new Circle(800));
@@ -32,6 +34,12 @@ public class motionPicture {
     	circList.add(new Circle(25, new int[] {0,0,0}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, width+30, width+30}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, -30, -30}));
+    	
+    	slider.setMajorTickSpacing(10);
+    	slider.setMinorTickSpacing(1);
+    	slider.setPaintTicks(true);
+    	slider.setPaintLabels(true);
+    	slider.setSnapToTicks(true);
     }
     
 	
@@ -47,6 +55,7 @@ public class motionPicture {
         drawPanel = new DrawPanel();
 
         frame.getContentPane().add(BorderLayout.CENTER, drawPanel);
+        frame.getContentPane().add(BorderLayout.NORTH, slider);
 
         frame.setVisible(true);
         frame.setResizable(false);
@@ -149,8 +158,8 @@ public class motionPicture {
     	moveCounter++;
     	if(moveCounter%60 == 0)
     	{
-    		int yBound = (int)(Math.random()*20);
-    		int xBound = (int)(Math.random()*20);
+    		int yBound = (int)(Math.random()*30);
+    		int xBound = (int)(Math.random()*30);
     		if(circModY >= yBound)
     		{
     			multY = -1;

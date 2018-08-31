@@ -27,8 +27,8 @@ public class primeNum {
 		boolean isPrime = true;
 		int rand = (int)(Math.random() * (end-start) + start);
 		
-		//iterate through all numbers from 2 to the generated number
-		for(int i = 2; i < rand; i++)
+		//iterate through all numbers from 2 to half the generated number
+		for(int i = 2; i < rand/2 + 1; i++)
 		{
 			//if rand has a remainder of 0 when divided by any number, it is not prime
 			if(rand % i == 0)
