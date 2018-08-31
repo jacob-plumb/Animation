@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class motionPicture {
 	
@@ -20,7 +21,7 @@ public class motionPicture {
     private int multY = 1;
     private int multX = 1;
     
-    public JSlider slider = new JSlider();
+    public JSlider slider = new JSlider(1, 50, 1);
     
     public motionPicture() {
     	circList.add(new Circle(1100));
@@ -35,11 +36,17 @@ public class motionPicture {
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, width+30, width+30}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, -30, -30}));
     	
-    	slider.setMajorTickSpacing(10);
     	slider.setMinorTickSpacing(1);
     	slider.setPaintTicks(true);
     	slider.setPaintLabels(true);
     	slider.setSnapToTicks(true);
+    	slider.setOrientation(SwingConstants.HORIZONTAL);
+    	
+    	Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+    	labelTable.put(new Integer(1), new JLabel("Fast"));
+    	labelTable.put(new Integer(50), new JLabel("Slow"));
+    	slider.setLabelTable(labelTable);
+    	slider.setPaintLabels(true);
     }
     
 	
@@ -97,7 +104,7 @@ public class motionPicture {
             growCircles();
             movePolygon();
             try{
-                Thread.sleep(1);
+                Thread.sleep(slider.getValue());
             } catch (Exception exc){}
             frame.repaint();
         }
