@@ -9,7 +9,7 @@ public class motionPicture {
     DrawPanel drawPanel;
 	
 	private int length = 800;
-    private int width = 600;
+    private int width = 700;
     ArrayList<Circle> circList = new ArrayList<Circle>();
     ArrayList<Polygon> polyList = new ArrayList<Polygon>();;
     
@@ -21,32 +21,42 @@ public class motionPicture {
     private int multY = 1;
     private int multX = 1;
     
-    public JSlider slider = new JSlider(1, 50, 1);
+    JSlider slider = new JSlider(1, 50, 25);
+    JSlider colorSlider = new JSlider(0, 256, 1);
     
     public motionPicture() {
-    	circList.add(new Circle(1100));
-    	circList.add(new Circle(800));
-    	circList.add(new Circle(550));
-    	circList.add(new Circle(350));
-    	circList.add(new Circle(200));
-    	circList.add(new Circle(100));
-    	circList.add(new Circle(50));
-    	circList.add(new Circle(25));
+    	circList.add(new Circle(1100, randRedBlue()));
+    	circList.add(new Circle(800, randRedBlue()));
+    	circList.add(new Circle(550, randRedBlue()));
+    	circList.add(new Circle(350, randRedBlue()));
+    	circList.add(new Circle(200, randRedBlue()));
+    	circList.add(new Circle(100, randRedBlue()));
+    	circList.add(new Circle(50, randRedBlue()));
+    	circList.add(new Circle(25, randRedBlue()));
     	circList.add(new Circle(25, new int[] {0,0,0}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, width+30, width+30}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, -30, -30}));
     	
+    	Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+    	labelTable.put(new Integer(1), new JLabel("Fast"));
+    	labelTable.put(new Integer(50), new JLabel("Slow"));
     	slider.setMinorTickSpacing(1);
     	slider.setPaintTicks(true);
     	slider.setPaintLabels(true);
     	slider.setSnapToTicks(true);
     	slider.setOrientation(SwingConstants.HORIZONTAL);
-    	
-    	Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-    	labelTable.put(new Integer(1), new JLabel("Fast"));
-    	labelTable.put(new Integer(50), new JLabel("Slow"));
     	slider.setLabelTable(labelTable);
     	slider.setPaintLabels(true);
+    	
+    	Hashtable<Integer, JLabel> colorLabelTabel = new Hashtable<Integer, JLabel>();
+    	colorLabelTabel.put(new Integer(0), new JLabel("Blue"));
+    	colorLabelTabel.put(new Integer(256), new JLabel("Red"));
+    	colorSlider.setMinorTickSpacing(1);
+    	colorSlider.setPaintLabels(true);
+    	colorSlider.setOrientation(SwingConstants.HORIZONTAL);
+    	colorSlider.setLabelTable(colorLabelTabel);
+    	colorSlider.setPaintLabels(true);
+    	
     }
     
 	
@@ -63,6 +73,7 @@ public class motionPicture {
 
         frame.getContentPane().add(BorderLayout.CENTER, drawPanel);
         frame.getContentPane().add(BorderLayout.NORTH, slider);
+        frame.getContentPane().add(BorderLayout.SOUTH, colorSlider);
 
         frame.setVisible(true);
         frame.setResizable(false);
@@ -88,14 +99,18 @@ public class motionPicture {
             	g.fillOval((length/2) - (circ.getSize()/2) - circModX, (width/2) - (circ.getSize()/2) - circModY, circ.getSize(), circ.getSize());
             }
             
-            //g.setColor(Color.black);
-            g.setColor(new Color(0, 0, (int)(Math.random()*156)));
+            g.setColor(new Color((int)(Math.random()*(colorSlider.getValue())), 0, (int)(Math.random()*(256-colorSlider.getValue()))));
             for(Polygon poly : polyList)
             {
             	g.fillPolygon(new int[] {poly.getX(0) - circModX, poly.getX(1), poly.getX(2)}, new int[] {poly.getY(0) - circModY, poly.getY(1), poly.getY(2)}, 3);
             }
             
         }
+    }
+    
+    private int[] randRedBlue()
+    {
+    	return new int[]{(int)(Math.random()*(colorSlider.getValue())), 0, (int)(Math.random()* (256-colorSlider.getValue()))};
     }
     
     private void animate() {
@@ -156,7 +171,7 @@ public class motionPicture {
     	//creating new circle
     	if(circList.get(circList.size()-2).getSize() == 50)
     	{
-    		circList.add(circList.size()-1, new Circle(25));
+    		circList.add(circList.size()-1, new Circle(25, randRedBlue()));
     	}
     }
     
