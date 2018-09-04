@@ -21,8 +21,9 @@ public class motionPicture {
     private int multY = 1;
     private int multX = 1;
     
-    JSlider slider = new JSlider(1, 50, 25);
+    JSlider slider = new JSlider(1, 50, 1);
     JSlider colorSlider = new JSlider(0, 256, 1);
+    JSlider rangeSlider = new JSlider(0, 100);
     
     public motionPicture() {
     	circList.add(new Circle(1100, randRedBlue()));
@@ -49,13 +50,16 @@ public class motionPicture {
     	slider.setPaintLabels(true);
     	
     	Hashtable<Integer, JLabel> colorLabelTabel = new Hashtable<Integer, JLabel>();
-    	colorLabelTabel.put(new Integer(0), new JLabel("Blue"));
-    	colorLabelTabel.put(new Integer(256), new JLabel("Red"));
+    	colorLabelTabel.put(new Integer(0), new JLabel("BLUE"));
+    	colorLabelTabel.put(new Integer(256), new JLabel("RED"));
     	colorSlider.setMinorTickSpacing(1);
     	colorSlider.setPaintLabels(true);
     	colorSlider.setOrientation(SwingConstants.HORIZONTAL);
     	colorSlider.setLabelTable(colorLabelTabel);
     	colorSlider.setPaintLabels(true);
+    	
+    	rangeSlider.setOrientation(SwingConstants.VERTICAL);
+    	
     	
     }
     
@@ -74,6 +78,7 @@ public class motionPicture {
         frame.getContentPane().add(BorderLayout.CENTER, drawPanel);
         frame.getContentPane().add(BorderLayout.NORTH, slider);
         frame.getContentPane().add(BorderLayout.SOUTH, colorSlider);
+        //frame.getContentPane().add(BorderLayout.WEST, rangeSlider);
 
         frame.setVisible(true);
         frame.setResizable(false);
