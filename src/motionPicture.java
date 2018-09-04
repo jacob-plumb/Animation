@@ -22,18 +22,18 @@ public class motionPicture {
     private int multX = 1;
     
     JSlider slider = new JSlider(1, 50, 1);
-    JSlider colorSlider = new JSlider(0, 256, 1);
-    JSlider rangeSlider = new JSlider(0, 100);
+    JSlider colorSlider = new JSlider(0, 16777215, 1);
+    JSlider rangeSlider = new JSlider(0, 125, 125);
     
     public motionPicture() {
-    	circList.add(new Circle(1100, randRedBlue()));
-    	circList.add(new Circle(800, randRedBlue()));
-    	circList.add(new Circle(550, randRedBlue()));
-    	circList.add(new Circle(350, randRedBlue()));
-    	circList.add(new Circle(200, randRedBlue()));
-    	circList.add(new Circle(100, randRedBlue()));
-    	circList.add(new Circle(50, randRedBlue()));
-    	circList.add(new Circle(25, randRedBlue()));
+    	circList.add(new Circle(1100, colorFromSlider()));
+    	circList.add(new Circle(800, colorFromSlider()));
+    	circList.add(new Circle(550, colorFromSlider()));
+    	circList.add(new Circle(350, colorFromSlider()));
+    	circList.add(new Circle(200, colorFromSlider()));
+    	circList.add(new Circle(100, colorFromSlider()));
+    	circList.add(new Circle(50, colorFromSlider()));
+    	circList.add(new Circle(25, colorFromSlider()));
     	circList.add(new Circle(25, new int[] {0,0,0}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, width+30, width+30}));
     	polyList.add(new Polygon(new int[]{length/2 - circModX, 350, 450}, new int[]{width/2 - circModY, -30, -30}));
@@ -50,16 +50,19 @@ public class motionPicture {
     	slider.setPaintLabels(true);
     	
     	Hashtable<Integer, JLabel> colorLabelTabel = new Hashtable<Integer, JLabel>();
-    	colorLabelTabel.put(new Integer(0), new JLabel("BLUE"));
-    	colorLabelTabel.put(new Integer(256), new JLabel("RED"));
+    	colorLabelTabel.put(new Integer(0), new JLabel(""));
+    	colorLabelTabel.put(new Integer(256), new JLabel(""));
     	colorSlider.setMinorTickSpacing(1);
     	colorSlider.setPaintLabels(true);
     	colorSlider.setOrientation(SwingConstants.HORIZONTAL);
     	colorSlider.setLabelTable(colorLabelTabel);
     	colorSlider.setPaintLabels(true);
     	
+    	rangeSlider.setMinorTickSpacing(1);
+    	rangeSlider.setMajorTickSpacing(25);
     	rangeSlider.setOrientation(SwingConstants.VERTICAL);
-    	
+    	rangeSlider.setPaintTicks(true);
+    	rangeSlider.setPaintLabels(true);
     	
     }
     
@@ -78,7 +81,7 @@ public class motionPicture {
         frame.getContentPane().add(BorderLayout.CENTER, drawPanel);
         frame.getContentPane().add(BorderLayout.NORTH, slider);
         frame.getContentPane().add(BorderLayout.SOUTH, colorSlider);
-        //frame.getContentPane().add(BorderLayout.WEST, rangeSlider);
+        frame.getContentPane().add(BorderLayout.WEST, rangeSlider);
 
         frame.setVisible(true);
         frame.setResizable(false);
@@ -104,18 +107,42 @@ public class motionPicture {
             	g.fillOval((length/2) - (circ.getSize()/2) - circModX, (width/2) - (circ.getSize()/2) - circModY, circ.getSize(), circ.getSize());
             }
             
-            g.setColor(new Color((int)(Math.random()*(colorSlider.getValue())), 0, (int)(Math.random()*(256-colorSlider.getValue()))));
+            int[] color = colorFromSlider();
+            g.setColor(new Color(color[0], color[1], color[2]));
             for(Polygon poly : polyList)
             {
             	g.fillPolygon(new int[] {poly.getX(0) - circModX, poly.getX(1), poly.getX(2)}, new int[] {poly.getY(0) - circModY, poly.getY(1), poly.getY(2)}, 3);
             }
-            
         }
     }
     
-    private int[] randRedBlue()
+    //private int[] randRedBlue()
+    //{
+    //	return new int[]{(int)(Math.random()*(colorSlider.getValue())), 0, (int)(Math.random()* (256-colorSlider.getValue()))};
+    //}
+    
+    private int[] colorFromSlider()
     {
-    	return new int[]{(int)(Math.random()*(colorSlider.getValue())), 0, (int)(Math.random()* (256-colorSlider.getValue()))};
+    	int start;
+    	int end;
+    	if (colorSlider.getValue() < rangeSlider.getValue())
+    	{
+    		start = 0;
+    	}
+    	else
+    	{
+    		start = colorSlider.getValue() - rangeSlider.getValue();
+    	}
+    	if(colorSlider.getValue() + rangeSlider.getValue() > colorSlider.getMaximum())
+    	{
+    		end = colorSlider.getMaximum();
+    	}
+    	else
+    	{
+    		end = colorSlider.getValue() + rangeSlider.getValue();
+    	}
+    	int rgb = (int)(Math.random()*(end-start) + start);
+    	return new int[] {(rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF};
     }
     
     private void animate() {
@@ -176,7 +203,7 @@ public class motionPicture {
     	//creating new circle
     	if(circList.get(circList.size()-2).getSize() == 50)
     	{
-    		circList.add(circList.size()-1, new Circle(25, randRedBlue()));
+    		circList.add(circList.size()-1, new Circle(25, colorFromSlider()));
     	}
     }
     
